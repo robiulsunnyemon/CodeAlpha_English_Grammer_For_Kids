@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../../../../config/colors/colors.dart';
+import '../../../../../../../config/component/next_button.dart';
+import '../../../../../../../config/custom_appbar/custom_appbar.dart';
+import '../../../../../../../config/routes/routes_name.dart';
+import '../data/intransitive_data.dart';
 
 
 class IntransitiveVerbScreen extends StatefulWidget {
@@ -12,34 +15,7 @@ class IntransitiveVerbScreen extends StatefulWidget {
 }
 
 class IntransitiveVerbScreenState extends State<IntransitiveVerbScreen> {
-  final String intransitiveVerbDefinition =
-      'An intransitive verb is an action verb that does not require an object to complete its meaning.';
 
-  final String intransitiveVerbExample =
-      'Example: She **sleeps** peacefully. ("sleeps" does not require an object)';
-
-  final List<Map<String, String>> intransitiveVerbTable = [
-    {'verb': 'Sleep', 'sentence': 'She sleeps peacefully.'},
-    {'verb': 'Run', 'sentence': 'He runs fast.'},
-    {'verb': 'Laugh', 'sentence': 'They laugh loudly.'},
-    {'verb': 'Cry', 'sentence': 'The baby cries.'},
-    {'verb': 'Arrive', 'sentence': 'He arrives late.'},
-  ];
-
-  final List<String> intransitiveVerbRules = [
-    'An intransitive verb does not take a direct object.',
-    'The sentence can end after the verb or be followed by an adverb or prepositional phrase.',
-    'Ask "what?" or "whom?" after the verb. If there is no answer, it is intransitive.',
-    'Example: "She sings." (Complete) vs "She sings a song." (Transitive)',
-  ];
-
-  final Map<String, String> quizQuestions = {
-    'Sleep': 'She sleeps ___.',
-    'Run': 'He runs ___.',
-    'Laugh': 'They laugh ___.',
-    'Cry': 'The baby cries ___.',
-    'Arrive': 'He arrives ___.',
-  };
 
   int currentQuestionIndex = 0;
   String userAnswer = '';
@@ -66,17 +42,7 @@ class IntransitiveVerbScreenState extends State<IntransitiveVerbScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Intransitive Verbs",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "Intransitive Verbs"),
       body: Padding(
         padding: const EdgeInsets.all(16.0).w,
         child: ListView(
@@ -184,18 +150,26 @@ class IntransitiveVerbScreenState extends State<IntransitiveVerbScreen> {
               },
             ),
             SizedBox(height: 16.h),
-            ElevatedButton(
-              onPressed: checkAnswer,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8).r),
-                backgroundColor: Colors.teal,
-                foregroundColor: Colors.white,
-              ),
-              child: Text(
-                'Check Answer',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: checkAnswer,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8).r),
+                    backgroundColor: Colors.teal,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    'Check Answer',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                ),
+                NextButton(onTap: (){
+                  Navigator.pushNamed(context, RoutesName.modalVerbPage);
+                })
+              ],
             ),
             SizedBox(height: 16.h),
             if (showResult)

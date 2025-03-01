@@ -1,7 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../config/colors/colors.dart';
+import '../../../config/component/next_button.dart';
+import '../../../config/custom_appbar/custom_appbar.dart';
+import '../../../config/routes/routes_name.dart';
+import '../clause_data.dart';
 
 class ClauseScreen extends StatefulWidget {
   const ClauseScreen({super.key});
@@ -11,23 +15,7 @@ class ClauseScreen extends StatefulWidget {
 }
 
 class ClauseScreenState extends State<ClauseScreen> {
-  final String clauseDefinition =
-      'A clause is a group of words that contains a subject and a verb. \nIt can either be independent (expressing a complete thought) or dependent (incomplete thought).';
 
-  final String clauseExample =
-      'Examples:\nIndependent clause: "She is reading a book." (complete thought)\nDependent clause: "Because she is reading a book" (incomplete thought)';
-
-  final List<String> clauseRules = [
-    'An independent clause can stand alone as a complete sentence.',
-    'A dependent clause cannot stand alone and requires an independent clause.',
-    'Dependent clauses often begin with subordinating conjunctions like "because", "if", "although".',
-    'Independent clauses are joined by coordinating conjunctions like "and", "but", "or".',
-  ];
-
-  final Map<String, String> quizQuestions = {
-    '___ is reading a book.': 'She',
-    'Because ___ is reading a book.': 'she',
-  };
 
   int currentQuestionIndex = 0;
   String userAnswer = '';
@@ -57,17 +45,7 @@ class ClauseScreenState extends State<ClauseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Clauses",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "Clauses"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0).w,
         child: ListView(
@@ -124,8 +102,7 @@ class ClauseScreenState extends State<ClauseScreen> {
                   fontSize: 22.sp, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
             ),
             SizedBox(height: 16.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
               children: [
                 Text(
                   quizQuestions.keys.elementAt(currentQuestionIndex),
@@ -138,6 +115,7 @@ class ClauseScreenState extends State<ClauseScreen> {
                         borderRadius: BorderRadius.circular(8).r),
                     foregroundColor: Colors.orangeAccent,
                     elevation: 0,
+
                   ),
                   child: Text(
                     'Next Question',
@@ -157,18 +135,26 @@ class ClauseScreenState extends State<ClauseScreen> {
               },
             ),
             SizedBox(height: 16.h),
-            ElevatedButton(
-              onPressed: checkAnswer,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8).r),
-                backgroundColor: Colors.teal,
-                foregroundColor: Colors.white,
-              ),
-              child: Text(
-                'Check Answer',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: checkAnswer,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8).r),
+                    backgroundColor: Colors.teal,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    'Check Answer',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                ),
+                NextButton(onTap: (){
+                  Navigator.pushNamed(context, RoutesName.interjectionPage);
+                })
+              ],
             ),
             SizedBox(height: 16.h),
             if (showResult)

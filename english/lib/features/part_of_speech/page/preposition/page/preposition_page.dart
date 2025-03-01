@@ -1,35 +1,29 @@
 import 'package:english/features/part_of_speech/page/preposition/data/preposition_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/colors/colors.dart';
 import '../../../../../config/component/next_button.dart';
+import '../../../../../config/custom_appbar/custom_appbar.dart';
 import '../../../../../config/routes/routes_name.dart';
+import '../../../../../config/theme/theme.dart';
 
 class PrepositionPage extends StatefulWidget {
   const PrepositionPage({super.key});
 
   @override
-  State<PrepositionPage> createState() => _VerbPageState();
+  State<PrepositionPage> createState() => PrepositionPageState();
 }
 
-class _VerbPageState extends State<PrepositionPage> {
+class PrepositionPageState extends State<PrepositionPage> {
 
 
   Map<int, String> selectedAnswers = {};
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = BlocProvider.of<ThemeCubit>(context).state == ThemeMode.dark;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Preposition",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "Preposition"),
       body: ListView.builder(
         itemCount: kindsOfPreposition.length,
         itemBuilder: (context, index) {
@@ -70,8 +64,8 @@ class _VerbPageState extends State<PrepositionPage> {
                       padding: const EdgeInsets.only(bottom: 4.0).w,
                       child: RichText(
                         text: TextSpan(
-                          style: const TextStyle(
-                              color: Color.fromRGBO(29, 27, 32, 1.0)),
+                          style:  TextStyle(
+                              color: isDarkMode?Colors.white: Color.fromRGBO(29, 27, 32, 1.0)),
                           children: _getHighlightedSentence(sentence),
                         ),
                       ),
@@ -107,7 +101,7 @@ class _VerbPageState extends State<PrepositionPage> {
                                       child: ChoiceChip(
                                         label: Text(option,
                                             style: TextStyle(
-                                                color: isSelected
+                                                color: isSelected || isDarkMode
                                                     ? Colors.white
                                                     : Colors.black)),
                                         selected: isSelected,

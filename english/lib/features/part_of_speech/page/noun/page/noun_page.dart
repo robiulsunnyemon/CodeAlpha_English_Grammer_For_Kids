@@ -1,7 +1,10 @@
+import 'package:english/config/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/colors/colors.dart';
 import '../../../../../config/component/next_button.dart';
+import '../../../../../config/custom_appbar/custom_appbar.dart';
 import '../../../../../config/routes/routes_name.dart';
 import '../data/noun_data.dart';
 
@@ -9,27 +12,18 @@ class NounPage extends StatefulWidget {
   const NounPage({super.key});
 
   @override
-  State<NounPage> createState() => _VerbPageState();
+  State<NounPage> createState() => _NounPageState();
 }
 
-class _VerbPageState extends State<NounPage> {
+class _NounPageState extends State<NounPage> {
 
 
   Map<int, String> selectedAnswers = {};
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = BlocProvider.of<ThemeCubit>(context).state == ThemeMode.dark;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Noun",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "NOUN"),
       body: ListView.builder(
         itemCount: kindsOfNoun.length,
         itemBuilder: (context, index) {
@@ -70,8 +64,8 @@ class _VerbPageState extends State<NounPage> {
                       padding: const EdgeInsets.only(bottom: 4.0).w,
                       child: RichText(
                         text: TextSpan(
-                          style: const TextStyle(
-                              color: Color.fromRGBO(29, 27, 32, 1.0)),
+                          style:  TextStyle(
+                              color: isDarkMode? Colors.white: Color.fromRGBO(29, 27, 32, 1.0)),
                           children: _getHighlightedSentence(sentence),
                         ),
                       ),
@@ -107,7 +101,7 @@ class _VerbPageState extends State<NounPage> {
                                       child: ChoiceChip(
                                         label: Text(option,
                                             style: TextStyle(
-                                                color: isSelected
+                                                color: isSelected || isDarkMode
                                                     ? Colors.white
                                                     : Colors.black)),
                                         selected: isSelected,
@@ -151,7 +145,7 @@ class _VerbPageState extends State<NounPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         NextButton(onTap: () {
-                          Navigator.pushNamed(context, RoutesName.pronounPage);
+                          Navigator.pushNamed(context, RoutesName.singularPluralNounPage);
                         }),
                       ],
                     )

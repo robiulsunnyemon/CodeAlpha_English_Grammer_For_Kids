@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../../config/component/next_button.dart';
+import '../../../../../../../config/custom_appbar/custom_appbar.dart';
+import '../../../../../../../config/routes/routes_name.dart';
+import '../../../../../../../config/theme/theme.dart';
+import '../data/modal_verb_data.dart';
+
 class ModalVerbScreen extends StatefulWidget {
   const ModalVerbScreen({super.key});
 
@@ -9,34 +15,7 @@ class ModalVerbScreen extends StatefulWidget {
 }
 
 class ModalVerbScreenState extends State<ModalVerbScreen> {
-  final String modalVerbDefinition =
-      'A modal verb is a type of auxiliary (helping) verb that expresses ability, possibility, permission, or necessity.';
 
-  final String modalVerbExample =
-      'Example: She **can** swim. ("can" shows ability)';
-
-  final List<Map<String, String>> modalVerbTable = [
-    {'verb': 'Can', 'sentence': 'She can swim.'},
-    {'verb': 'Must', 'sentence': 'You must wear a seatbelt.'},
-    {'verb': 'May', 'sentence': 'He may come later.'},
-    {'verb': 'Shall', 'sentence': 'We shall go now.'},
-    {'verb': 'Should', 'sentence': 'You should study hard.'},
-  ];
-
-  final List<String> modalVerbRules = [
-    'Modal verbs do not change form (no -s, -ed, or -ing endings).',
-    'They are followed by the base form of a verb (without "to").',
-    'They do not require auxiliary verbs to form questions or negatives.',
-    'Examples: "Can you help?" (Correct) vs "Do you can help?" (Incorrect)',
-  ];
-
-  final Map<String, String> quizQuestions = {
-    'Can': 'She __ swim.',
-    'Must': 'You __ wear a helmet.',
-    'May': 'He __ arrive later.',
-    'Shall': 'We __ leave now.',
-    'Should': 'You __ eat healthy food.',
-  };
 
   int currentQuestionIndex = 0;
   String userAnswer = '';
@@ -63,17 +42,7 @@ class ModalVerbScreenState extends State<ModalVerbScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Modal Verbs",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.blueAccent,
-      ),
+      appBar:CustomAppBar(title: "Modal Verbs"),
       body: Padding(
         padding: const EdgeInsets.all(16.0).w,
         child: ListView(
@@ -182,18 +151,26 @@ class ModalVerbScreenState extends State<ModalVerbScreen> {
               },
             ),
             SizedBox(height: 16.h),
-            ElevatedButton(
-              onPressed: checkAnswer,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8).r),
-                backgroundColor: Colors.teal,
-                foregroundColor: Colors.white,
-              ),
-              child: Text(
-                'Check Answer',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: checkAnswer,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8).r),
+                    backgroundColor: Colors.teal,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    'Check Answer',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                ),
+                NextButton(onTap: (){
+                  Navigator.pushNamed(context, RoutesName.conjugationVerbPage);
+                })
+              ],
             ),
             SizedBox(height: 16.h),
             if (showResult)

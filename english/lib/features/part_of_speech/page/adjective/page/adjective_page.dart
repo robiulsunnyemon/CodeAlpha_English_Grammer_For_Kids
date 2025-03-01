@@ -1,35 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/colors/colors.dart';
 import '../../../../../config/component/next_button.dart';
+import '../../../../../config/custom_appbar/custom_appbar.dart';
 import '../../../../../config/routes/routes_name.dart';
+import '../../../../../config/theme/theme.dart';
 import '../data/adjective_data.dart';
 
 class AdjectivePage extends StatefulWidget {
   const AdjectivePage({super.key});
 
   @override
-  State<AdjectivePage> createState() => _VerbPageState();
+  State<AdjectivePage> createState() => AdjectivePageState();
 }
 
-class _VerbPageState extends State<AdjectivePage> {
+class AdjectivePageState extends State<AdjectivePage> {
 
 
   Map<int, String> selectedAnswers = {};
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = BlocProvider.of<ThemeCubit>(context).state == ThemeMode.dark;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Adjective",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "Adverb"),
       body: ListView.builder(
         itemCount: kindsOfAdjective.length,
         itemBuilder: (context, index) {
@@ -70,8 +64,8 @@ class _VerbPageState extends State<AdjectivePage> {
                       padding: const EdgeInsets.only(bottom: 4.0).w,
                       child: RichText(
                         text: TextSpan(
-                          style: const TextStyle(
-                              color: Color.fromRGBO(29, 27, 32, 1.0)),
+                          style:  TextStyle(
+                              color: isDarkMode?Colors.white: Color.fromRGBO(29, 27, 32, 1.0)),
                           children: _getHighlightedSentence(sentence),
                         ),
                       ),
@@ -107,7 +101,7 @@ class _VerbPageState extends State<AdjectivePage> {
                                       child: ChoiceChip(
                                         label: Text(option,
                                             style: TextStyle(
-                                                color: isSelected
+                                                color: isSelected || isDarkMode
                                                     ? Colors.white
                                                     : Colors.black)),
                                         selected: isSelected,
@@ -151,7 +145,7 @@ class _VerbPageState extends State<AdjectivePage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         NextButton(onTap: () {
-                          Navigator.pushNamed(context, RoutesName.verbPage);
+                          Navigator.pushNamed(context, RoutesName.degreePage);
                         }),
                       ],
                     )

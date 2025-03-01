@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../config/colors/colors.dart';
+import '../../../config/component/next_button.dart';
+import '../../../config/custom_appbar/custom_appbar.dart';
+import '../../../config/routes/routes_name.dart';
+import '../data/subject_verb_agreement.dart';
 
 class SubjectVerbAgreementScreen extends StatefulWidget {
   const SubjectVerbAgreementScreen({super.key});
@@ -11,33 +14,7 @@ class SubjectVerbAgreementScreen extends StatefulWidget {
 }
 
 class SubjectVerbAgreementScreenState extends State<SubjectVerbAgreementScreen> {
-  final String definition =
-      'Subject-verb agreement refers to the grammatical rule that the subject and verb in a sentence must agree in number (singular/plural).';
 
-  final String example =
-      'Example: "She runs every day." (The singular subject "She" agrees with the singular verb "runs.")';
-
-  final List<Map<String, String>> agreementTable = [
-    {'subject': 'He', 'verb': 'runs'},
-    {'subject': 'They', 'verb': 'run'},
-    {'subject': 'I', 'verb': 'am'},
-    {'subject': 'She', 'verb': 'is'},
-    {'subject': 'We', 'verb': 'are'},
-  ];
-
-  final List<String> rules = [
-    'A singular subject takes a singular verb (e.g., She runs).',
-    'A plural subject takes a plural verb (e.g., They run).',
-    'Subjects joined by "and" take a plural verb (e.g., John and Jane run).',
-    'Subjects joined by "or" take the verb that agrees with the subject closest to the verb (e.g., Either John or his friends are coming).',
-  ];
-
-  final Map<String, String> quizQuestions = {
-    'He __ to the market.': 'goes',
-    'They __ to school.': 'go',
-    'I __ a student.': 'am',
-    'She __ a teacher.': 'is',
-  };
 
   int currentQuestionIndex = 0;
   String userAnswer = '';
@@ -64,17 +41,7 @@ class SubjectVerbAgreementScreenState extends State<SubjectVerbAgreementScreen> 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Subject-Verb Agreement",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "Subject Verb Agreement"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0).w,
         child: ListView(
@@ -182,18 +149,26 @@ class SubjectVerbAgreementScreenState extends State<SubjectVerbAgreementScreen> 
               },
             ),
             SizedBox(height: 16.h),
-            ElevatedButton(
-              onPressed: checkAnswer,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8).r),
-                backgroundColor: Colors.teal,
-                foregroundColor: Colors.white,
-              ),
-              child: Text(
-                'Check Answer',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: checkAnswer,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8).r),
+                    backgroundColor: Colors.teal,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    'Check Answer',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                ),
+                NextButton(onTap: (){
+                  Navigator.pushNamed(context, RoutesName.adverbPage);
+                })
+              ],
             ),
             SizedBox(height: 16.h),
             if (showResult)

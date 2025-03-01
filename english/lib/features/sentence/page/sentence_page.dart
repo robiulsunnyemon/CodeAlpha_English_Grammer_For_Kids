@@ -1,73 +1,21 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/colors/colors.dart';
+import '../../../config/component/next_button.dart';
+import '../../../config/custom_appbar/custom_appbar.dart';
+import '../../../config/routes/routes_name.dart';
+import '../data/sentence_data.dart';
 
 class SentenceScreen extends StatefulWidget {
   const SentenceScreen({super.key});
 
   @override
-  _SentenceScreenState createState() => _SentenceScreenState();
+  SentenceScreenState createState() => SentenceScreenState();
 }
 
-class _SentenceScreenState extends State<SentenceScreen> {
-  final String sentenceDefinition =
-      'A sentence is a group of words that expresses a complete thought. It must have at least a subject and a predicate.';
-
-  final List<String> sentenceTypes = [
-    'Assertive: It makes a statement or expresses a fact or opinion.',
-    'Interrogative: It asks a question.',
-    'Imperative: It gives a command or request.',
-    'Optative: It expresses a wish, desire, or hope.',
-    'Exclamatory: It shows strong emotion.',
-    'Simple: It contains a subject and a verb and expresses a complete thought.',
-    'Complex: It contains one independent clause and at least one dependent clause.',
-    'Compound: It contains two independent clauses joined by a conjunction.',
-  ];
-
-
-  final List<String> sentenceParts = [
-    'Subject: The person or thing the sentence is about.',
-    'Predicate: What the subject does or is.',
-    'Object: The receiver of the action.',
-    'Complement: Adds more information about the subject or object.',
-  ];
-
-  final List<String> sentenceStructures = [
-    'Simple Sentence: Contains a subject and a verb and expresses a complete thought.',
-    'Compound Sentence: Contains two independent clauses joined by a conjunction.',
-    'Complex Sentence: Contains an independent clause and at least one dependent clause.',
-    'Compound-Complex Sentence: Contains two independent clauses and at least one dependent clause.',
-  ];
-
-
-
-  final Map<String, String> quizQuestions = {
-    '___ is playing soccer.': 'He',
-    '___ you like ice cream?': 'Do',
-    'Please ___ your homework.': 'complete',
-    'What a beautiful ___!': 'day',
-  };
-
-  final Map<String, String> sentenceExamples = {
-    'Simple Sentence': 'She reads books.',
-    'Compound Sentence': 'I wanted to go to the park, but it started raining.',
-    'Complex Sentence': 'Although it was raining, I went for a walk.',
-    'Compound-Complex Sentence': 'Although it was raining, I went for a walk, and I saw my friends there.',
-    'Assertive Sentence': 'I love to learn new languages.',
-    'Interrogative Sentence': 'Do you like ice cream?',
-    'Imperative Sentence': 'Please close the door.',
-    'Optative Sentence': 'I wish I could travel the world.',
-    'Exclamatory Sentence': 'Wow, that’s amazing!',
-    'Negative Sentence': 'He does not like chocolate.',
-    'Interrogative-Assertive Sentence': 'Could you tell me the time?',
-    'Exclamatory-Imperative Sentence': 'What a beautiful view, let’s take a picture!',
-    'Negative-Imperative Sentence': 'Don’t go there.',
-    'Affirmative Sentence': 'She is a talented singer.',
-    'Conditional Sentence': 'If it rains, we will stay inside.',
-    'Explanatory Sentence': 'The sun rises in the east.',
-    'Relative Sentence': 'The book that I read was interesting.',
-  };
+class SentenceScreenState extends State<SentenceScreen> {
 
 
   int currentQuestionIndex = 0;
@@ -96,17 +44,7 @@ class _SentenceScreenState extends State<SentenceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Sentences",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "Interjection"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0).w,
         child: ListView(
@@ -251,18 +189,26 @@ class _SentenceScreenState extends State<SentenceScreen> {
               },
             ),
             SizedBox(height: 16.h),
-            ElevatedButton(
-              onPressed: checkAnswer,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8).r),
-                backgroundColor: Colors.teal,
-                foregroundColor: Colors.white,
-              ),
-              child: Text(
-                'Check Answer',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: checkAnswer,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8).r),
+                    backgroundColor: Colors.teal,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    'Check Answer',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                ),
+                NextButton(onTap: (){
+                  Navigator.pushNamed(context, RoutesName.tensePage);
+                })
+              ],
             ),
             SizedBox(height: 16.h),
             if (showResult)

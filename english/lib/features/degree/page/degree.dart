@@ -1,7 +1,13 @@
+import 'package:english/config/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/colors/colors.dart';
+import '../../../config/component/next_button.dart';
+import '../../../config/custom_appbar/custom_appbar.dart';
+import '../../../config/routes/routes_name.dart';
+import '../data/degree_data.dart';
 
 class DegreeScreen extends StatefulWidget {
   const DegreeScreen({super.key});
@@ -11,39 +17,7 @@ class DegreeScreen extends StatefulWidget {
 }
 
 class DegreeScreenState extends State<DegreeScreen> {
-  final String degreeDefinition =
-      'Degrees of Comparison are used to compare one thing with another.';
 
-  final String degreeExample =
-      'Example: Positive - Tall, Comparative - Taller, Superlative - Tallest.';
-
-  final List<Map<String, String>> degreeTable = [
-    {'positive': 'Tall', 'comparative': 'Taller', 'superlative': 'Tallest'},
-    {'positive': 'Small', 'comparative': 'Smaller', 'superlative': 'Smallest'},
-    {'positive': 'Good', 'comparative': 'Better', 'superlative': 'Best'},
-    {'positive': 'Bad', 'comparative': 'Worse', 'superlative': 'Worst'},
-    {
-      'positive': 'Beautiful',
-      'comparative': 'More Beautiful',
-      'superlative': 'Most Beautiful'
-    },
-  ];
-
-  final List<String> degreeRules = [
-    '1. For most one-syllable adjectives, add -er for comparative and -est for superlative. (e.g., Tall → Taller → Tallest)',
-    '2. If the adjective ends in -e, just add -r for comparative and -st for superlative. (e.g., Large → Larger → Largest)',
-    '3. If the adjective ends in a single consonant preceded by a single vowel, double the consonant before adding -er or -est. (e.g., Big → Bigger → Biggest)',
-    '4. For adjectives with two or more syllables, use "more" for comparative and "most" for superlative. (e.g., Beautiful → More Beautiful → Most Beautiful)',
-    '5. Some adjectives have irregular forms. (e.g., Good → Better → Best, Bad → Worse → Worst)',
-  ];
-
-  final Map<String, String> quizQuestions = {
-    'Tall': 'Taller',
-    'Good': 'Better',
-    'Bad': 'Worse',
-    'Beautiful': 'More Beautiful',
-    'Small': 'Smaller',
-  };
 
   int currentQuestionIndex = 0;
   String userAnswer = '';
@@ -72,18 +46,9 @@ class DegreeScreenState extends State<DegreeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = BlocProvider.of<ThemeCubit>(context).state == ThemeMode.dark;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Degrees of Comparison",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "Degree of Comparison"),
       body: Padding(
         padding: const EdgeInsets.all(16.0).w,
         child: ListView(
@@ -204,18 +169,26 @@ class DegreeScreenState extends State<DegreeScreen> {
               },
             ),
             SizedBox(height: 16.h),
-            ElevatedButton(
-              onPressed: checkAnswer,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8).r),
-                backgroundColor: Colors.teal,
-                foregroundColor: Colors.white,
-              ),
-              child: Text(
-                'Check Answer',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: checkAnswer,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8).r),
+                    backgroundColor: Colors.teal,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    'Check Answer',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                ),
+                NextButton(onTap: () {
+                  Navigator.pushNamed(context, RoutesName.verbPage);
+                }),
+              ],
             ),
             SizedBox(height: 16.h),
             if (showResult)

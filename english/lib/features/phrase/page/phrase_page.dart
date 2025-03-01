@@ -1,7 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/colors/colors.dart';
+import '../../../config/component/next_button.dart';
+import '../../../config/custom_appbar/custom_appbar.dart';
+import '../../../config/routes/routes_name.dart';
+import '../data/phrase_data.dart';
 
 class PhraseScreen extends StatefulWidget {
   const PhraseScreen({super.key});
@@ -11,33 +16,7 @@ class PhraseScreen extends StatefulWidget {
 }
 
 class PhraseScreenState extends State<PhraseScreen> {
-  final String phraseDefinition =
-      'A phrase is a group of words that work together as a unit but do not contain both a subject and a verb.';
 
-  final String phraseExample =
-      'Example: "In the morning" (This phrase gives additional information but does not have a subject-verb pair.)';
-
-  final List<Map<String, String>> phraseTable = [
-    {'type': 'Noun Phrase', 'example': 'The big black dog'},
-    {'type': 'Verb Phrase', 'example': 'is running fast'},
-    {'type': 'Adjective Phrase', 'example': 'very beautiful'},
-    {'type': 'Adverb Phrase', 'example': 'quite quickly'},
-    {'type': 'Prepositional Phrase', 'example': 'on the table'},
-  ];
-
-  final List<String> phraseRules = [
-    'A phrase does not contain both a subject and a verb.',
-    'It functions as a single part of speech.',
-    'Phrases can act as nouns, verbs, adjectives, adverbs, or prepositions.',
-  ];
-
-  final Map<String, String> quizQuestions = {
-    'Noun Phrase': 'The little ___.',
-    'Verb Phrase': 'is ___.',
-    'Adjective Phrase': 'very ___.',
-    'Adverb Phrase': 'quite ___.',
-    'Prepositional Phrase': 'on the ___.',
-  };
 
   int currentQuestionIndex = 0;
   String userAnswer = '';
@@ -64,17 +43,7 @@ class PhraseScreenState extends State<PhraseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Phrases",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "Phrases"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0).w,
         child: ListView(
@@ -183,18 +152,26 @@ class PhraseScreenState extends State<PhraseScreen> {
               },
             ),
             SizedBox(height: 16.h),
-            ElevatedButton(
-              onPressed: checkAnswer,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8).r),
-                backgroundColor: Colors.teal,
-                foregroundColor: Colors.white,
-              ),
-              child: Text(
-                'Check Answer',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: checkAnswer,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8).r),
+                    backgroundColor: Colors.teal,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    'Check Answer',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                ),
+                NextButton(onTap: (){
+                  Navigator.pushNamed(context, RoutesName.clausePage);
+                })
+              ],
             ),
             SizedBox(height: 16.h),
             if (showResult)

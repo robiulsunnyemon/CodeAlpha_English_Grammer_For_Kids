@@ -1,39 +1,21 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../config/colors/colors.dart';
+import '../../../config/component/next_button.dart';
+import '../../../config/custom_appbar/custom_appbar.dart';
+import '../../../config/routes/routes_name.dart';
+import '../article_data.dart';
 
 class ArticleScreen extends StatefulWidget {
   const ArticleScreen({super.key});
 
   @override
-  _ArticleScreenState createState() => _ArticleScreenState();
+  ArticleScreenState createState() => ArticleScreenState();
 }
 
-class _ArticleScreenState extends State<ArticleScreen> {
-  final String articleDefinition =
-      'An article is a word that is used to modify a noun. In English, there are three articles: "a," "an," and "the."';
+class ArticleScreenState extends State<ArticleScreen> {
 
-  final String articleExample =
-      'Examples:\n"a" is used before words that begin with a consonant sound.\n"an" is used before words that begin with a vowel sound.\n"the" is used when referring to something specific or known to the listener.';
-
-  final List<Map<String, String>> articleTable = [
-    {'article': 'a', 'rule': 'Used before words that begin with a consonant sound.'},
-    {'article': 'an', 'rule': 'Used before words that begin with a vowel sound.'},
-    {'article': 'the', 'rule': 'Used when referring to something specific or known to the listener.'},
-  ];
-
-  final List<String> articleRules = [
-    'Use "a" before words beginning with a consonant sound.',
-    'Use "an" before words beginning with a vowel sound.',
-    'Use "the" to refer to something specific or previously mentioned.',
-    'Do not use articles when referring to general things or uncountable nouns.',
-  ];
-
-  final Map<String, String> quizQuestions = {
-    '___ apple a day keeps the doctor away.': 'an',
-    '___ sun rises in the east.': 'the',
-  };
 
   int currentQuestionIndex = 0;
   String userAnswer = '';
@@ -63,17 +45,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Articles (a, an, the)",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "Articles (a, an, the)"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0).w,
         child: ListView(
@@ -195,18 +167,26 @@ class _ArticleScreenState extends State<ArticleScreen> {
               },
             ),
             SizedBox(height: 16.h),
-            ElevatedButton(
-              onPressed: checkAnswer,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8).r),
-                backgroundColor: Colors.teal,
-                foregroundColor: Colors.white,
-              ),
-              child: Text(
-                'Check Answer',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: checkAnswer,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8).r),
+                    backgroundColor: Colors.teal,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    'Check Answer',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                ),
+                NextButton(onTap: (){
+                  Navigator.pushNamed(context, RoutesName.prepositionPage);
+                })
+              ],
             ),
             SizedBox(height: 16.h),
             if (showResult)

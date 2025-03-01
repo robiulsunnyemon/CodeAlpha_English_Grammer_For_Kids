@@ -5,6 +5,7 @@ import 'package:english/features/degree/page/degree.dart';
 import 'package:english/features/home/page/home_page.dart';
 import 'package:english/features/part_of_speech/page/adverb/page/adverb_page.dart';
 import 'package:english/features/part_of_speech/page/conjunction/page/conjunction_page.dart';
+import 'package:english/features/part_of_speech/page/interjection/page/interjection_page.dart';
 import 'package:english/features/part_of_speech/page/noun/page/noun_page.dart';
 import 'package:english/features/part_of_speech/page/noun/singluler_plural_noun/page/singuler_plural_page.dart';
 import 'package:english/features/part_of_speech/page/preposition/page/preposition_page.dart';
@@ -93,6 +94,8 @@ class Routes {
      case RoutesName.tensePage:
         return MaterialPageRoute(builder: (BuildContext context) =>  TenseScreen());
 
+     case RoutesName.interjectionPage:
+        return MaterialPageRoute(builder: (BuildContext context) =>  InterjectionPage());
       default:
         return MaterialPageRoute(builder: (context) {
           return const Scaffold(

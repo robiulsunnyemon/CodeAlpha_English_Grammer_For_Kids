@@ -1,9 +1,12 @@
-import 'package:english/config/colors/colors.dart';
+
 import 'package:english/config/component/next_button.dart';
 import 'package:english/config/routes/routes_name.dart';
+import 'package:english/config/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../config/custom_appbar/custom_appbar.dart';
 import '../data/data.dart';
 
 
@@ -12,19 +15,16 @@ class PartOfSpeechScreen extends StatefulWidget {
    const PartOfSpeechScreen({super.key});
 
   @override
-  State<PartOfSpeechScreen> createState() => _PartOfSpeechScreenState();
+  State<PartOfSpeechScreen> createState() => PartOfSpeechScreenState();
 }
 
-class _PartOfSpeechScreenState extends State<PartOfSpeechScreen> {
+class PartOfSpeechScreenState extends State<PartOfSpeechScreen> {
   Map<int, String> selectedAnswers = {};
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = BlocProvider.of<ThemeCubit>(context).state == ThemeMode.dark;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Part of Speech",style: TextStyle(color: Colors.white,fontSize: 25.sp,fontWeight: FontWeight.bold),),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: CustomAppBar(title: "Parts Of Speech"),
       body: ListView.builder(
         itemCount: partsOfSpeeches.length,
         itemBuilder: (context, index) {
@@ -81,7 +81,7 @@ class _PartOfSpeechScreenState extends State<PartOfSpeechScreen> {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 4.0).w,
                                       child: ChoiceChip(
-                                        label: Text(option, style: TextStyle(color: isSelected ? Colors.white : Colors.black)),
+                                        label: Text(option, style: TextStyle(color: isSelected || isDarkMode ? Colors.white : Colors.black)),
                                         selected: isSelected,
                                         showCheckmark: false,
                                         selectedColor: isSelected
